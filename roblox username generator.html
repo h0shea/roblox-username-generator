@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox Username Generator</title>
+    <style>
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table, td   {
+            width:100px;
+            text-align:center;
+            background-color:silver;
+            font-family: helvetica;
+        }
+        th  {
+            color:white;
+            background-color:dimgray;
+        }
+        td{
+            padding:5px;
+        }
+        .settings  {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top:5px;
+            margin-bottom:15px;
+        }
+    </style>
+    <script src="scriptrug.js"></script>
+</head>
+
+<body>
+    <div class="title">
+        <img src="rug logo.png" style="width: 75px; height: 75px;">
+        <h1 style="font-family: Tahoma;">Roblox Username Generator</h1>
+        <img src="rug logo.png" style="width: 75px; height: 75px;">
+    </div>
+    <div class="inside">
+    <p align="center">This generator can able to create and find roblox usernames for you to snipe and use.
+    Input the character length between 3 amd 20 then click the 'Generate' button to generate a Roblox username!</p>
+    <p align="center">This generator was created by <a href="https://www.roblox.com/users/354994422/profile">hosheamanein</a> from Roblox using HTML and JavaScript.</p>
+    <div class="inside"><center>
+        <input id="input" type="text" placeholder="Type character length here!"></input>
+        <button onclick="displayMessage()">Generate</button>
+    <div class="settings">
+        <label for="lettersonly">Letters only</label>
+        <input type="checkbox" id="lettersonly" onclick="lettersonly()">
+    </div>
+    <table id="username"><tr><th>Usernames:</th></tr><tr><td>-</td></tr></table>
+    <p id="caption" style="color: red;"><b>There are no Roblox usernames generated. Please input a number between 3 and 20!</b></p>
+    </center></div>
+</body>
+</html>
