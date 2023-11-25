@@ -9,7 +9,7 @@ function lettersonly(){
     }
 }
 
-function displayMessage(){
+function generate(){
     let char = document.getElementById("input").value;
     if (isNaN(char) || char < 3 || char > 20) {
         let text = "";
@@ -18,8 +18,7 @@ function displayMessage(){
         document.getElementById("caption").innerHTML = text;
         document.getElementById("caption").style.color = "red";
         document.getElementById("username").innerHTML = table;
-    }
-    else {
+    } else  {
         const LN = ["_", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         let structure = [];
         let list = "";
@@ -35,11 +34,13 @@ function displayMessage(){
                 let lnlength = LN.length - l;
                 let random = LN[(Math.floor(Math.random()* (lnlength - underscore)) + underscore)];
                 if (random == "_" && i == 0)  {
-                    n+=1;
-                    random = LN[(Math.floor(Math.random()* (LN.length - n)) + n)];
+                    n=1;
+                    random = LN[(Math.floor(Math.random()* (lnlength - n)) + n)];
+                    n=0;
                 } else if (random == "_" && i == char-1)  {
-                    n+=1;
-                    random = LN[(Math.floor(Math.random()* (LN.length - n)) + n)];
+                    n=1;
+                    random = LN[(Math.floor(Math.random()* (lnlength - n)) + n)];
+                    n=0;
                 } else if (random == "_")   {
                     underscore+=1;
                 }
@@ -54,7 +55,7 @@ function displayMessage(){
         table += "<tr>" + list + "</tr>";
         list = "";
         }
-
+        
         document.getElementById("username").innerHTML = table;
 
         text += "There are <b>" + amount + "</b> possible Roblox usernames that are " + char + " characters long.";
