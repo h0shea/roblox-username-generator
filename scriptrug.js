@@ -1,65 +1,87 @@
-let l = 0;
+function makeUsername(length, includeNumbers, includeUnderscore) {
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "1234567890";
+    const underscore = "_";
 
-function lettersonly(){
-    let checkBox = document.getElementById("lettersonly");
-    if (checkBox.checked == true)   {
-        l=10;
+    let allowedChars = "";
+    let username = "";
+
+    allowedChars += letters;
+    allowedChars += includeNumbers ? numbers : "";
+    allowedChars += includeUnderscore ? underscore : "";
+
+    let usedUnderscore = 0;
+
+    for (let i = 0; i < length; i++) {
+        let random;
+
+        if ((i == 0 || i == (length - 1)) && includeUnderscore) {
+            random = Math.floor(Math.random() * (allowedChars.length - 1));
+        } else if (usedUnderscore == 1) {
+            random = Math.floor(Math.random() * (allowedChars.length - 1));
+        } else {
+            random = Math.floor(Math.random() * allowedChars.length);
+        }
+
+        if (allowedChars[random] == "_" && usedUnderscore == 0) {
+            usedUnderscore += 1;
+        }
+
+        username += allowedChars[random];
+    }
+
+    return username;
+}
+
+let hasNumbers = true;
+let hasUnderscore = true;
+
+function noNumbers() {
+    if (!document.getElementById("noNumbers").checked) {
+        hasNumbers = true;
     } else {
-        l=0;
+        hasNumbers = false;
+    }
+}
+
+function noUnderscore() {
+    if (!document.getElementById("noUnderscore").checked) {
+        hasUnderscore = true;
+    } else {
+        hasUnderscore = false;
     }
 }
 
 function generate(){
-    let char = document.getElementById("input").value;
-    if (isNaN(char) || char < 3 || char > 20) {
-        let text = "";
-        let table = "<tr><th>Usernames:</th></tr><tr><td>-</td></tr>";
-        text += "<b>There are no Roblox usernames generated. Please input a number between 3 and 20!</b>";
+    let length = document.getElementById("input").value;
+    let amount = 36 ** length + (length - 2) * (36 ** (length - 1));
+    let table = ``;
+    let text = ``;
+
+    table += `<tr><th colspan="5">Usernames:</th></tr>`;
+
+    if (length < 3 || length > 20) {
+        table += `<tr><td>-</td></tr>`;
+
+        text += `There are no Roblox usernames generated. Please input a number between 3 and 20!`;
         document.getElementById("caption").innerHTML = text;
         document.getElementById("caption").style.color = "red";
-        document.getElementById("username").innerHTML = table;
-    } else  {
-        const LN = ["_", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-        let structure = [];
-        let list = "";
-        let text = "";
-        let amount = 36 ** char + (char - 2) * (36 ** (char - 1));
-        let table = "<tr><th colspan=5>Usernames:</th></tr>";
-        
-        for (let i = 0; i < 20; i++) { // vertical
-        for (let i = 0; i < 5; i++) { // horizontal
-            let underscore = 0;
-            for (let i = 0; i < char; i++) {
-                let n = 0;
-                let lnlength = LN.length - l;
-                let random = LN[(Math.floor(Math.random()* (lnlength - underscore)) + underscore)];
-                if (random == "_" && i == 0)  {
-                    n=1;
-                    random = LN[(Math.floor(Math.random()* (lnlength - n)) + n)];
-                    n=0;
-                } else if (random == "_" && i == char-1)  {
-                    n=1;
-                    random = LN[(Math.floor(Math.random()* (lnlength - n)) + n)];
-                    n=0;
-                } else if (random == "_")   {
-                    underscore+=1;
-                }
-            
-                structure.push(random);
+        document.getElementById("caption").style.fontWeight = "900";
+    } else {
+        for (let i = 0; i < 10; i++) {
+            table += `<tr>`;
+            for (let j = 0; j < 5; j++) {
+                const username = makeUsername(length, hasNumbers, hasUnderscore);
+                table += `<td>${username}</td>`;
             }
-
-            list += "<td>" + structure.join("") + "</td>";
-            structure = [];
+            table += `</tr>`;
         }
 
-        table += "<tr>" + list + "</tr>";
-        list = "";
-        }
-        
-        document.getElementById("username").innerHTML = table;
-
-        text += "There are <b>" + amount + "</b> possible Roblox usernames that are " + char + " characters long.";
+        text += `There are <b>${amount}</b> possible Roblox usernames that are ${length} characters long.`;
         document.getElementById("caption").innerHTML = text;
         document.getElementById("caption").style.color = "black";
+        document.getElementById("caption").style.fontWeight = "200";
     }
+
+    document.getElementById("username").innerHTML = table;
 }
