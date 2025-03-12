@@ -68,7 +68,7 @@ function generate(){
         document.getElementById("caption").style.color = "red";
         document.getElementById("caption").style.fontWeight = "900";
     } else {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
             table += `<tr>`;
             for (let j = 0; j < 5; j++) {
                 const username = makeUsername(length, hasNumbers, hasUnderscore);
